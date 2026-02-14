@@ -1,6 +1,6 @@
 # ImgConvert
 
-一个最小的桌面图片格式转换工具（GUI）。支持 SVG、JPG、PNG、WebP 四种格式之间转换。
+一个最小的桌面图片格式转换工具（GUI）。支持 SVG、JPG、PNG、WebP、ICO 五种格式之间转换。
 
 ## 运行
 
@@ -20,3 +20,4 @@ python -m imgconvert
 
 - SVG -> JPG/PNG/WebP：使用 Qt 的 SVG 渲染能力将 SVG 渲染为位图后导出。
 - JPG/PNG/WebP -> SVG：不做矢量化（复杂），而是把位图以 base64 方式嵌入到 SVG 的 `<image>` 中，仍然是合法的 SVG 文件。
+- 输出 ICO：使用 Pillow 生成包含多尺寸（16~256）的 ICO 图标文件。

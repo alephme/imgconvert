@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import base64
+from io import BytesIO
 import mimetypes
 import os
 import re
@@ -15,6 +16,7 @@ from PySide6.QtSvg import QSvgRenderer
 
 
 SUPPORTED_FORMATS = ("svg", "jpg", "png", "webp")
+SUPPORTED_FORMATS = ("svg", "jpg", "png", "webp", "ico")
 
 
 @dataclass(frozen=True)
@@ -123,6 +125,10 @@ def _read_raster(path: Path) -> Tuple[Optional[QImage], str]:
 
 def _write_raster(image: QImage, out_path: Path, out_fmt: str) -> Tuple[bool, str]:
     out_fmt = _norm_ext(out_fmt)
+
+    if out_fmt == "ico":
+        return _write_ico(image, out_path)
+
     writer = QImageWriter(str(out_path), out_fmt.encode("ascii"))
 
     # JPG 不支持透明：统一铺白底
@@ -140,6 +146,37 @@ def _write_raster(image: QImage, out_path: Path, out_fmt: str) -> Tuple[bool, st
     if not ok:
         err = writer.errorString() or "未知错误"
         return False, f"写出失败：{err}"
+    return True, ""
+
+
+def _write_ico(image: QImage, out_path: Path) -> Tuple[bool, str]:
+    try:
+        from PIL import Image
+    except Exception:
+        return False, "写出 ICO 需要 Pillow：请安装 pip install Pillow"
+
+    png_bytes = _qimage_to_png_bytes(image)
+    try:
+        src = Image.open(BytesIO(png_bytes)).convert("RGBA")
+    except Exception as exc:
+        return False, f"ICO 编码失败：{exc}"
+
+    src_w, src_h = src.size
+    if src_w <= 0 or src_h <= 0:
+        return False, "ICO 编码失败：输入图像尺寸无效"
+
+    side = max(src_w, src_h)
+    canvas = Image.new("RGBA", (side, side), (0, 0, 0, 0))
+    paste_x = (side - src_w) // 2
+    paste_y = (side - src_h) // 2
+    canvas.paste(src, (paste_x, paste_y), src)
+
+    sizes = [(16, 16), (24, 24), (32, 32), (48, 48), (64, 64), (128, 128), (256, 256)]
+    try:
+        canvas.save(str(out_path), format="ICO", sizes=sizes)
+    except Exception as exc:
+        return False, f"写出 ICO 失败：{exc}"
+
     return True, ""
 
 
@@ -195,7 +232,7 @@ def convert_file(input_path: Path, output_path: Path, output_format: str) -> Con
         return ConvertResult(True, "转换完成", output_path)
 
     # Raster -> Raster
-    if in_fmt in ("jpg", "png", "webp") and output_format in ("jpg", "png", "webp"):
+    if in_fmt in ("jpg", "png", "webp", "ico") and output_format in ("jpg", "png", "webp", "ico"):
         image, err = _read_raster(input_path)
         if not image:
             return ConvertResult(False, err)
@@ -205,7 +242,7 @@ def convert_file(input_path: Path, output_path: Path, output_format: str) -> Con
         return ConvertResult(True, "转换完成", output_path)
 
     # SVG -> Raster
-    if in_fmt == "svg" and output_format in ("jpg", "png", "webp"):
+    if in_fmt == "svg" and output_format in ("jpg", "png", "webp", "ico"):
         svg_bytes = _read_bytes(input_path)
         image, err = _render_svg_to_image(svg_bytes)
         if not image:
@@ -216,7 +253,7 @@ def convert_file(input_path: Path, output_path: Path, output_format: str) -> Con
         return ConvertResult(True, "转换完成", output_path)
 
     # Raster -> SVG (embed)
-    if in_fmt in ("jpg", "png", "webp") and output_format == "svg":
+    if in_fmt in ("jpg", "png", "webp", "ico") and output_format == "svg":
         image, err = _read_raster(input_path)
         if not image:
             return ConvertResult(False, err)

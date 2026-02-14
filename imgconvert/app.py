@@ -34,7 +34,7 @@ class MainWindow(QMainWindow):
         layout.setVerticalSpacing(8)
 
         self.input_edit = QLineEdit()
-        self.input_edit.setPlaceholderText("选择要转换的图片文件（.svg/.jpg/.png/.webp）")
+        self.input_edit.setPlaceholderText("选择要转换的图片文件（.svg/.jpg/.png/.webp/.ico）")
 
         self.btn_browse_in = QPushButton("选择…")
         self.btn_browse_in.clicked.connect(self._pick_input)
@@ -77,7 +77,7 @@ class MainWindow(QMainWindow):
             self,
             "选择输入图片",
             "",
-            "Images (*.svg *.png *.jpg *.jpeg *.webp);;All Files (*)",
+            "Images (*.svg *.png *.jpg *.jpeg *.webp *.ico);;All Files (*)",
         )
         if not path:
             return

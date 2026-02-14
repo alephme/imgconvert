@@ -3,6 +3,9 @@ name = "imgconvert"
 version = "0.1.0"
 description = "A minimal GUI image format converter (SVG/JPG/PNG/WebP)."
 requires-python = ">=3.9"
+dependencies = [
+    "pillow>=11.3.0",
+]
 
 [tool.setuptools]
 package-dir = {"" = "."}
