@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import sys
 from pathlib import Path
 
 from PySide6.QtCore import Qt
@@ -153,12 +154,21 @@ class MainWindow(QMainWindow):
         )
 
 
-def main() -> int:
-    app = QApplication([])
+def main(argv: list[str] | None = None) -> int:
+    if argv is None:
+        argv = sys.argv
+
+    app = QApplication(argv)
     app.setApplicationDisplayName("ImgConvert")
 
     w = MainWindow()
     w.resize(720, 220)
+
+    if len(argv) > 1:
+        startup_path = Path(argv[1]).expanduser()
+        w.input_edit.setText(str(startup_path))
+        w._suggest_output()
+
     w.show()
 
     return app.exec()
