@@ -55,21 +55,27 @@ Source: "D:\workspace\imgconvert\dist\{#MyAppExeName}"; DestDir: "{app}"; Flags:
 
 [Registry]
 Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.jpg\shell\ImgConvert"; ValueType: string; ValueName: ""; ValueData: "{#MyAppContextVerb}"; Flags: uninsdeletekey; Tasks: contextmenu
+Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.jpg\shell\ImgConvert"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\{#MyAppExeName},0"; Tasks: contextmenu
 Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.jpg\shell\ImgConvert"; ValueType: string; ValueName: "MultiSelectModel"; ValueData: "Player"; Tasks: contextmenu
 Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.jpg\shell\ImgConvert\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#MyAppExeName}"" %*"; Flags: uninsdeletekey; Tasks: contextmenu
 Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.jpeg\shell\ImgConvert"; ValueType: string; ValueName: ""; ValueData: "{#MyAppContextVerb}"; Flags: uninsdeletekey; Tasks: contextmenu
+Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.jpeg\shell\ImgConvert"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\{#MyAppExeName},0"; Tasks: contextmenu
 Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.jpeg\shell\ImgConvert"; ValueType: string; ValueName: "MultiSelectModel"; ValueData: "Player"; Tasks: contextmenu
 Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.jpeg\shell\ImgConvert\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#MyAppExeName}"" %*"; Flags: uninsdeletekey; Tasks: contextmenu
 Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.png\shell\ImgConvert"; ValueType: string; ValueName: ""; ValueData: "{#MyAppContextVerb}"; Flags: uninsdeletekey; Tasks: contextmenu
+Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.png\shell\ImgConvert"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\{#MyAppExeName},0"; Tasks: contextmenu
 Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.png\shell\ImgConvert"; ValueType: string; ValueName: "MultiSelectModel"; ValueData: "Player"; Tasks: contextmenu
 Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.png\shell\ImgConvert\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#MyAppExeName}"" %*"; Flags: uninsdeletekey; Tasks: contextmenu
 Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.svg\shell\ImgConvert"; ValueType: string; ValueName: ""; ValueData: "{#MyAppContextVerb}"; Flags: uninsdeletekey; Tasks: contextmenu
+Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.svg\shell\ImgConvert"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\{#MyAppExeName},0"; Tasks: contextmenu
 Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.svg\shell\ImgConvert"; ValueType: string; ValueName: "MultiSelectModel"; ValueData: "Player"; Tasks: contextmenu
 Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.svg\shell\ImgConvert\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#MyAppExeName}"" %*"; Flags: uninsdeletekey; Tasks: contextmenu
 Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.webp\shell\ImgConvert"; ValueType: string; ValueName: ""; ValueData: "{#MyAppContextVerb}"; Flags: uninsdeletekey; Tasks: contextmenu
+Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.webp\shell\ImgConvert"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\{#MyAppExeName},0"; Tasks: contextmenu
 Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.webp\shell\ImgConvert"; ValueType: string; ValueName: "MultiSelectModel"; ValueData: "Player"; Tasks: contextmenu
 Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.webp\shell\ImgConvert\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#MyAppExeName}"" %*"; Flags: uninsdeletekey; Tasks: contextmenu
 Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.ico\shell\ImgConvert"; ValueType: string; ValueName: ""; ValueData: "{#MyAppContextVerb}"; Flags: uninsdeletekey; Tasks: contextmenu
+Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.ico\shell\ImgConvert"; ValueType: string; ValueName: "Icon"; ValueData: "{app}\{#MyAppExeName},0"; Tasks: contextmenu
 Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.ico\shell\ImgConvert"; ValueType: string; ValueName: "MultiSelectModel"; ValueData: "Player"; Tasks: contextmenu
 Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.ico\shell\ImgConvert\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#MyAppExeName}"" %*"; Flags: uninsdeletekey; Tasks: contextmenu
 
