@@ -26,6 +26,9 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.setWindowTitle("ImgConvert")
 
+        self._batch_inputs: list[Path] = []
+        self._batch_mode = False
+
         root = QWidget(self)
         self.setCentralWidget(root)
 
@@ -82,10 +85,13 @@ class MainWindow(QMainWindow):
         )
         if not path:
             return
+        self._set_batch_mode(False)
         self.input_edit.setText(path)
         self._suggest_output()
 
     def _suggest_output(self) -> None:
+        if self._batch_mode:
+            return
         in_path = Path(self.input_edit.text().strip())
         if not in_path.suffix:
             return
@@ -107,6 +113,14 @@ class MainWindow(QMainWindow):
         self.output_edit.setText(str(suggested))
 
     def _pick_output(self) -> None:
+        if self._batch_mode:
+            base_dir = self.output_edit.text().strip() or self.input_edit.text().strip()
+            start_dir = str(Path(base_dir).parent) if base_dir else ""
+            path = QFileDialog.getExistingDirectory(self, "选择输出目录", start_dir)
+            if not path:
+                return
+            self.output_edit.setText(path)
+            return
         out_fmt = self.format_combo.currentData() or "png"
         default_suffix = "." + out_fmt
 
@@ -134,11 +148,16 @@ class MainWindow(QMainWindow):
         if not in_str:
             QMessageBox.warning(self, "提示", "请选择输入文件")
             return
-        if not out_str:
-            QMessageBox.warning(self, "提示", "请选择输出路径")
-            return
         if not out_fmt:
             QMessageBox.warning(self, "提示", "请选择输出格式")
+            return
+
+        if self._batch_mode and self._batch_inputs:
+            self._convert_batch(str(out_fmt))
+            return
+
+        if not out_str:
+            QMessageBox.warning(self, "提示", "请选择输出路径")
             return
 
         result = convert_file(Path(in_str), Path(out_str), str(out_fmt))
@@ -153,6 +172,61 @@ class MainWindow(QMainWindow):
             f"已生成：\n{result.output_path}",
         )
 
+    def _convert_batch(self, out_fmt: str) -> None:
+        total = len(self._batch_inputs)
+        success = 0
+        failures: list[str] = []
+
+        out_dir_text = self.output_edit.text().strip()
+        if out_dir_text:
+            out_dir = Path(out_dir_text).expanduser()
+        else:
+            out_dir = None
+
+        for in_path in self._batch_inputs:
+            target_dir = out_dir if out_dir is not None else in_path.parent
+            out_path = (target_dir / in_path.stem).with_suffix("." + out_fmt)
+            result = convert_file(in_path, out_path, out_fmt)
+            if result.ok:
+                success += 1
+            else:
+                failures.append(f"{in_path} -> {result.message}")
+
+        self.status.setText(f"批量完成：成功 {success}/{total}")
+        if failures:
+            detail = "\n".join(failures[:5])
+            more = "" if len(failures) <= 5 else f"\n... 还有 {len(failures) - 5} 个失败"
+            QMessageBox.critical(self, "批量转换失败", detail + more)
+            return
+
+        QMessageBox.information(self, "批量转换完成", f"成功 {success}/{total}")
+
+    def _set_batch_mode(self, enabled: bool) -> None:
+        self._batch_mode = enabled
+        self.output_edit.setEnabled(True)
+        self.btn_browse_out.setEnabled(True)
+        if enabled:
+            self.output_edit.setPlaceholderText("选择输出目录（可选，默认与原图同目录）")
+            self.output_edit.setText("")
+        else:
+            self.output_edit.setPlaceholderText("选择输出路径")
+            if self.status.text().startswith("批量模式"):
+                self.status.setText("")
+
+    def set_startup_inputs(self, paths: list[str]) -> None:
+        cleaned = [Path(p).expanduser() for p in paths if p]
+        self._batch_inputs = cleaned
+        if len(cleaned) <= 1:
+            self._set_batch_mode(False)
+            if cleaned:
+                self.input_edit.setText(str(cleaned[0]))
+                self._suggest_output()
+            return
+
+        self._set_batch_mode(True)
+        self.input_edit.setText(str(cleaned[0]))
+        self.status.setText(f"批量模式：已选择 {len(cleaned)} 个文件")
+
 
 def main(argv: list[str] | None = None) -> int:
     if argv is None:
@@ -165,9 +239,7 @@ def main(argv: list[str] | None = None) -> int:
     w.resize(720, 220)
 
     if len(argv) > 1:
-        startup_path = Path(argv[1]).expanduser()
-        w.input_edit.setText(str(startup_path))
-        w._suggest_output()
+        w.set_startup_inputs(argv[1:])
 
     w.show()
 
