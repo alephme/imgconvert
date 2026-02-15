@@ -47,25 +47,25 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "chinese"; MessagesFile: "compiler:Languages\Chinese.isl"
 
 [Tasks]
-Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
-
+Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"
+Name: "contextmenu"; Description: "创建右键菜单项"; GroupDescription: "{cm:AdditionalIcons}"
 [Files]
 Source: "D:\workspace\imgconvert\dist\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Registry]
-Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.jpg\shell\ImgConvert"; ValueType: string; ValueName: ""; ValueData: "{#MyAppContextVerb}"; Flags: uninsdeletekey
-Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.jpg\shell\ImgConvert\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#MyAppExeName}"" ""%1"""; Flags: uninsdeletekey
-Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.jpeg\shell\ImgConvert"; ValueType: string; ValueName: ""; ValueData: "{#MyAppContextVerb}"; Flags: uninsdeletekey
-Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.jpeg\shell\ImgConvert\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#MyAppExeName}"" ""%1"""; Flags: uninsdeletekey
-Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.png\shell\ImgConvert"; ValueType: string; ValueName: ""; ValueData: "{#MyAppContextVerb}"; Flags: uninsdeletekey
-Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.png\shell\ImgConvert\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#MyAppExeName}"" ""%1"""; Flags: uninsdeletekey
-Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.svg\shell\ImgConvert"; ValueType: string; ValueName: ""; ValueData: "{#MyAppContextVerb}"; Flags: uninsdeletekey
-Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.svg\shell\ImgConvert\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#MyAppExeName}"" ""%1"""; Flags: uninsdeletekey
-Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.webp\shell\ImgConvert"; ValueType: string; ValueName: ""; ValueData: "{#MyAppContextVerb}"; Flags: uninsdeletekey
-Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.webp\shell\ImgConvert\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#MyAppExeName}"" ""%1"""; Flags: uninsdeletekey
-Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.ico\shell\ImgConvert"; ValueType: string; ValueName: ""; ValueData: "{#MyAppContextVerb}"; Flags: uninsdeletekey
-Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.ico\shell\ImgConvert\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#MyAppExeName}"" ""%1"""; Flags: uninsdeletekey
+Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.jpg\shell\ImgConvert"; ValueType: string; ValueName: ""; ValueData: "{#MyAppContextVerb}"; Flags: uninsdeletekey; Tasks: contextmenu
+Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.jpg\shell\ImgConvert\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#MyAppExeName}"" ""%1"""; Flags: uninsdeletekey; Tasks: contextmenu
+Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.jpeg\shell\ImgConvert"; ValueType: string; ValueName: ""; ValueData: "{#MyAppContextVerb}"; Flags: uninsdeletekey; Tasks: contextmenu
+Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.jpeg\shell\ImgConvert\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#MyAppExeName}"" ""%1"""; Flags: uninsdeletekey; Tasks: contextmenu
+Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.png\shell\ImgConvert"; ValueType: string; ValueName: ""; ValueData: "{#MyAppContextVerb}"; Flags: uninsdeletekey; Tasks: contextmenu
+Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.png\shell\ImgConvert\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#MyAppExeName}"" ""%1"""; Flags: uninsdeletekey; Tasks: contextmenu
+Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.svg\shell\ImgConvert"; ValueType: string; ValueName: ""; ValueData: "{#MyAppContextVerb}"; Flags: uninsdeletekey; Tasks: contextmenu
+Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.svg\shell\ImgConvert\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#MyAppExeName}"" ""%1"""; Flags: uninsdeletekey; Tasks: contextmenu
+Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.webp\shell\ImgConvert"; ValueType: string; ValueName: ""; ValueData: "{#MyAppContextVerb}"; Flags: uninsdeletekey; Tasks: contextmenu
+Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.webp\shell\ImgConvert\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#MyAppExeName}"" ""%1"""; Flags: uninsdeletekey; Tasks: contextmenu
+Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.ico\shell\ImgConvert"; ValueType: string; ValueName: ""; ValueData: "{#MyAppContextVerb}"; Flags: uninsdeletekey; Tasks: contextmenu
+Root: HKA; Subkey: "Software\Classes\SystemFileAssociations\.ico\shell\ImgConvert\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#MyAppExeName}"" ""%1"""; Flags: uninsdeletekey; Tasks: contextmenu
 
 [Icons]
 Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
