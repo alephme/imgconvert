@@ -5,3 +5,9 @@ venv/
 .env
 *.log
 .DS_Store
+original_icon/
+dist/
+build/
+*.egg-info/
+*.spec
+*.exe
